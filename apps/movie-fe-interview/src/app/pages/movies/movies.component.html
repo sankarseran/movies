@@ -1,0 +1,19 @@
+<div class="movies-container">
+	<app-movie-filter [searchTerm]="searchTerm()" [selectedGenres]="selectedGenres()"
+		(filterChanged)="updateQueryParams($event)" (clearFilters)="clearFilters()">
+	</app-movie-filter>
+
+	@if (!loading()) {
+	<ng-container>
+		<app-movie-list [movies]="movies()"></app-movie-list>
+		<mat-paginator class="paginator" [length]="totalLength()" [pageSize]="pageSize" [pageIndex]="pageIndex"
+			[pageSizeOptions]="[10, 20, 50]" (page)="onPageChange($event)" aria-label="Select page">
+		</mat-paginator>
+	</ng-container>
+	} @else {
+	<div class="no-movies-state">
+		<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+		<p>No movies found</p>
+	</div>
+	}
+</div>

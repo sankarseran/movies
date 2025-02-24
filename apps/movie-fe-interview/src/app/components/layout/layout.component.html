@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" class="header">
+	<a routerLink="/" class="logo">
+		<img src="assets/images/logo-icon.svg" alt="Movie App Logo" />
+	</a>
+
+	<nav class="nav-links">
+		<a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+		<a mat-button routerLink="/movies" routerLinkActive="active">Movies</a>
+		<a mat-button routerLink="/recent" routerLinkActive="active">Last Visited</a>
+	</nav>
+</mat-toolbar>
+
+<main class="content">
+	<router-outlet></router-outlet>
+</main>

@@ -1,0 +1,10 @@
+@if (movies().length > 0) {
+<ng-container>
+	<app-movie-list [movies]="movies()"></app-movie-list>
+</ng-container>
+} @else {
+<div class="no-movies-state">
+	<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+	<p>No movies found</p>
+</div>
+}

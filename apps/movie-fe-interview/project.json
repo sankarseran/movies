@@ -1,0 +1,121 @@
+{
+  "name": "movie-fe-interview",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    },
+    "@schematics/angular:application": {
+      "strict": true
+    }
+  },
+  "sourceRoot": "apps/movie-fe-interview/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "options": {
+        "outputPath": "dist/apps/movie-fe-interview",
+        "index": "apps/movie-fe-interview/src/index.html",
+        "polyfills": [
+          "apps/movie-fe-interview/src/polyfills.ts"
+        ],
+        "tsConfig": "apps/movie-fe-interview/tsconfig.app.json",
+        "assets": [
+          "apps/movie-fe-interview/src/favicon.ico",
+          "apps/movie-fe-interview/src/assets"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "./node_modules",
+            "apps/movie-fe-interview/src/assets/styles"
+          ]
+        },
+        "styles": [
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/movie-fe-interview/src/styles.scss"
+        ],
+        "scripts": [],
+        "extractLicenses": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "browser": "apps/movie-fe-interview/src/main.ts"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/movie-fe-interview/src/environments/environment.ts",
+              "with": "apps/movie-fe-interview/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": ""
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "movie-fe-interview:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "movie-fe-interview:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "movie-fe-interview:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/movie-fe-interview/src/test.ts",
+        "polyfills": "apps/movie-fe-interview/src/polyfills.ts",
+        "tsConfig": "apps/movie-fe-interview/tsconfig.spec.json",
+        "karmaConfig": "apps/movie-fe-interview/karma.conf.js",
+        "assets": [
+          "apps/movie-fe-interview/src/favicon.ico",
+          "apps/movie-fe-interview/src/assets"
+        ],
+        "styles": [
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/movie-fe-interview/src/styles.scss"
+        ],
+        "scripts": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "eslintConfig": "eslint.config.js",
+        "lintFilePatterns": [
+          "apps/movie-fe-interview/src/**/*.ts",
+          "apps/movie-fe-interview/src/**/*.html"
+        ]
+      }
+    }
+  }
+}

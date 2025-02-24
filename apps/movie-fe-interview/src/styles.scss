@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@app/colors';
+
+html,
+body {
+	height: 100%;
+	scrollbar-width: thin;
+	scrollbar-color: var(--grayscale-gs-secondary-1) var(--main-color-light);
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.error-snackbar .mat-mdc-snackbar-surface {
+	background-color: $primary-color !important;
+	color: $red !important;
+	padding: 10px;
+	border-radius: 8px;
+	border: 1px solid $secondary-color;
+}
+
+.error-snackbar .mat-mdc-button {
+	color: $accent-color !important;
+	font-weight: bold;
+}

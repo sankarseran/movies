@@ -1,0 +1,43 @@
+@import '@app/colors';
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 99;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 16px;
+	background-color: $primary-color;
+	color: $white;
+	box-shadow: 0 4px 6px rgba(0 0 0 / 10%);
+	border-bottom: 1px solid $light-gray;
+
+	.logo {
+		img {
+			height: 50px;
+		}
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 16px;
+
+		a {
+			color: $white;
+			font-weight: 500;
+			text-decoration: none;
+
+			&.active {
+				border-bottom: 2px solid $accent-color;
+			}
+		}
+	}
+}
+
+.content {
+	padding: 64px 20px 20px;
+	background-color: $primary-color;
+}

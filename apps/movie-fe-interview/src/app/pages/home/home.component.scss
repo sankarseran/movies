@@ -1,0 +1,22 @@
+@import '@app/colors';
+
+.no-movies-state {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 91vh;
+	color: $white;
+
+	mat-icon {
+		margin-bottom: 16px;
+		font-size: 48px;
+		width: 48px;
+		height: 48px;
+	}
+
+	p {
+		font-size: 18px;
+		font-weight: 500;
+	}
+}

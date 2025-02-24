@@ -1,0 +1,38 @@
+@import '@app/colors';
+@import '@app/mixins';
+
+.filter-container {
+	display: flex;
+	gap: 16px;
+	padding: 20px 16px 0;
+	background: $secondary-color;
+	border-radius: 8px;
+	align-items: center;
+	margin: 0 16px;
+	justify-content: center;
+	position: fixed;
+	top: 60px;
+	left: 0;
+	right: 0;
+	z-index: 9;
+
+	mat-form-field {
+		flex: 1 1 300px;
+		max-width: 300px;
+	}
+
+	button {
+		flex: 0 0 auto;
+		margin-bottom: 20px;
+	}
+}
+
+:host {
+	.mdc-button {
+		color: $primary-color;
+	}
+
+	.mat-mdc-button>.mat-icon {
+		margin: auto;
+	}
+}

@@ -1,0 +1,26 @@
+<div class="filter-container">
+	<mat-form-field appearance="outline">
+		<mat-label>Search Movies</mat-label>
+		<input matInput [formControl]="searchControl" placeholder="Search by title..." />
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Filter by Genre</mat-label>
+		<mat-select multiple [formControl]="genreControl">
+			@for (genre of genresOptions(); track genre) {
+			<mat-option [value]="genre">
+				{{ genre }}
+			</mat-option>
+			}
+
+		</mat-select>
+	</mat-form-field>
+
+	<button mat-button color="primary" (click)="clearAllFilters()">
+		@if(isSmallScreen()) {
+		<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="clear"></mat-icon>
+		} @else {
+		Clear Filters
+		}
+	</button>
+</div>

@@ -1,0 +1,8 @@
+@if (movies().length > 0) {
+<app-movie-list [movies]="movies()"></app-movie-list>
+} @else {
+<div class="no-movies-state">
+	<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+	<p>You don't have any recent movies</p>
+</div>
+}

@@ -1,0 +1,42 @@
+@if (movie()) {
+<div class="movie-container">
+	<div class="movie-background">
+		<img [src]="movie()?.image?.url || ''" [alt]="movie()?.image?.title || 'Movie Image'"
+			(error)="onImageError($event)" class="movie-image" />
+	</div>
+
+	<div class="movie-details">
+		<h1 class="movie-title">{{ movie()?.title }}</h1>
+		<p class="movie-description">
+			A movie summary, also called a movie synopsis, is a one-page document that condenses a 3-hour long film into
+			a few
+			paragraphs. It typically includes a movie title, genre, logline (or a single sentence summary), major plot
+			points,
+			a five-paragraph explanation of the storyline, and key characters.
+		</p>
+
+		<div class="movie-info">
+			<div class="info-item">
+				<strong>Genres:</strong> {{ movie()?.genres?.join(', ') || 'N/A' }}
+			</div>
+			<div class="info-item">
+				<strong>Popularity:</strong> {{ roundPopularity(movie()?.popularity) }}
+			</div>
+			<div class="info-item">
+				<strong>Budget:</strong> {{ movie()?.budget | currency: 'EUR' }}
+			</div>
+			<div class="info-item">
+				<strong>Runtime:</strong> {{ movie()?.runtime }}
+			</div>
+			<div class="info-item">
+				<strong>Release Date:</strong> {{ movie()?.released }}
+			</div>
+		</div>
+	</div>
+</div>
+} @else {
+<div class="no-movies-state">
+	<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>
+	<p>No movie found</p>
+</div>
+}
