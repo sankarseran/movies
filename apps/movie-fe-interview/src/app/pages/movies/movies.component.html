@@ -6,7 +6,7 @@
 	@if (!loading()) {
 	<ng-container>
 		<app-movie-list [movies]="movies()"></app-movie-list>
-		<mat-paginator class="paginator" [length]="totalLength()" [pageSize]="pageSize" [pageIndex]="pageIndex"
+		<mat-paginator class="paginator" [length]="totalLength()" [pageSize]="pageSize()" [pageIndex]="pageIndex()"
 			[pageSizeOptions]="[10, 20, 50]" (page)="onPageChange($event)" aria-label="Select page">
 		</mat-paginator>
 	</ng-container>
