@@ -38,10 +38,3 @@ mat-paginator {
   background-color: $secondary-color;
   z-index: 1000;
 }
-
-:host {
-  .mat-mdc-paginator-container {
-    justify-content: center;
-  }
-}
-

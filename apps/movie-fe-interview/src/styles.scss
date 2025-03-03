@@ -25,3 +25,9 @@ body {
 	color: $accent-color !important;
 	font-weight: bold;
 }
+
+.mat-mdc-paginator-container {
+	justify-content: center !important;
+	margin: 5px;
+	color: $primary-color;
+}

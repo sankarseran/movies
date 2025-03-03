@@ -4,6 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "types": [],
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "useDefineForClassFields": false
   },
   "files": ["src/main.ts", "src/polyfills.ts"],

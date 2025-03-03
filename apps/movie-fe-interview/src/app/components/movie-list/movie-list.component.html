@@ -1,14 +1,7 @@
 <div class="app-home-content">
 	<div class="movie-list">
 		@for (movie of movies(); track movie.id) {
-		<div class="movie-card" (click)="openMovie(movie)">
-			<img [src]="movie.image.url" [alt]="movie.image.title" (error)="onImageError($event)" />
-			<h3>{{ movie.title }}</h3>
-			<div class="movie-info">
-				<p class="genre">{{ movie.genres.join(', ') }}</p>
-				<p class="rating">⭐ {{ movie.popularity }}</p>
-			</div>
-		</div>
+		<app-movie-card [movie]="movie"></app-movie-card>
 		}
 	</div>
 </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { of, switchMap, tap } from 'rxjs';
 import { Movie, MovieData, MovieStateModel, QueryParam } from '../client/movie.model';
@@ -34,7 +34,8 @@ import { ToastService } from '../services/toast.service';
 })
 @Injectable()
 export class MovieState {
-  constructor(private movieMockClient: MovieMockClient, private toastService: ToastService) {}
+	movieMockClient = inject(MovieMockClient);
+	toastService = inject(ToastService);
 
   @Selector()
   static getPopularMovies(state: MovieStateModel): Movie[] {

@@ -4,6 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "types": ["jasmine"],
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "useDefineForClassFields": false
   },
   "files": ["src/test.ts", "src/polyfills.ts"],
