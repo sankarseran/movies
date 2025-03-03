@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit, inject, Signal, DestroyRef } from '@angular/core';
 import { MovieState } from '../../shared/state/movie.state';
-import { dispatch, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { LoadPopularMovies, Movie } from '../../shared';
 import { MovieListComponent } from '../../components/movie-list/movie-list.component';
 import { ToastService } from '../../shared/services/toast.service';
@@ -22,10 +22,9 @@ export class HomeComponent implements OnInit {
   private toastService = inject(ToastService);
   store = inject(Store);
   movies: Signal<Movie[]> = this.store.selectSignal(MovieState.getPopularMovies);
-  LoadPopularMovies = dispatch(LoadPopularMovies);
 
   ngOnInit(): void {
-    this.LoadPopularMovies()
+    this.store.dispatch(new LoadPopularMovies())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         error: () => {

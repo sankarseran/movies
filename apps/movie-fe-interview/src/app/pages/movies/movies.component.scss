@@ -36,5 +36,6 @@ mat-paginator {
   width: 100%;
   box-shadow: 0 -2px 5px rgba(0 0 0 / 10%);
   background-color: $secondary-color;
-  z-index: 1000;
+  z-index: 9;
+	border-radius: 8px;
 }
