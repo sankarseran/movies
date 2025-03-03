@@ -1,7 +1,5 @@
-@if (movies().length > 0) {
-<ng-container>
+@if (movies().length) {
 	<app-movie-list [movies]="movies()"></app-movie-list>
-</ng-container>
 } @else {
 <div class="no-movies-state">
 	<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="error"></mat-icon>

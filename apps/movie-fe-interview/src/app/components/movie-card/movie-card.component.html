@@ -1,5 +1,5 @@
 <div class="movie-card" routerLink="/movie/{{ movie()?.slug }}">
-	<img [src]="movie()?.image?.url" [alt]="movie()?.image?.title" (error)="onImageError($event)" />
+	<img [src]="movie()?.image?.url" [alt]="movie()?.image?.title" (error)="onImageError($event, 360)" />
 	<h3>{{ movie()?.title }}</h3>
 	<div class="movie-info">
 		<p class="genre">{{ movie()?.genres?.join(', ') }}</p>

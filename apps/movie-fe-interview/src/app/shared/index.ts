@@ -10,4 +10,4 @@ export {
   LoadGenres,
   ClearMovie,
 } from './state/movie.actions';
-export { compareArr } from './utils';
+export { compareArr, onImageError } from './utils';

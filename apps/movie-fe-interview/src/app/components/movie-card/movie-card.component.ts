@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
-import { Movie } from '../../shared';
+import { Movie, onImageError } from '../../shared';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -12,11 +12,5 @@ import { RouterLink } from '@angular/router';
 })
 export class MovieCardComponent {
   movie: InputSignal<Movie | undefined> = input();
-  backupImage = 'assets/images/logo-icon.svg';
-
-  onImageError(event: Event) {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.height = 360;
-    imgElement.src = this.backupImage;
-  }
+	onImageError = onImageError;
 }

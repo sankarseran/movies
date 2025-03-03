@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { MovieState } from '../../shared/state/movie.state';
-import { AddLastVisitedMovie, LoadMovie, Movie, ClearMovie } from '../../shared';
+import { AddLastVisitedMovie, LoadMovie, Movie, ClearMovie, onImageError } from '../../shared';
 import { ToastService } from '../../shared/services/toast.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
   private toastService = inject(ToastService);
   movie: Signal<Movie | null> = this.store.selectSignal(MovieState.getMovie);
-  backupImage = 'assets/images/logo-icon.svg';
+  onImageError = onImageError;
 
   constructor() {
     effect(() => {
@@ -67,10 +67,5 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   roundPopularity(popularity: string | undefined): number {
     return popularity ? parseFloat(Number(popularity).toFixed(2)) : 0;
-  }
-
-  onImageError(event: Event) {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.src = this.backupImage;
   }
 }
