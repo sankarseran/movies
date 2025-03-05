@@ -44,6 +44,12 @@ export class MovieMockClient {
       .pipe(map((movies) => movies.sort((a, b) => Number(b.popularity) - Number(a.popularity)).slice(0, 10)));
   }
 
+  getLastVisitedMovies(ids: string[]): Observable<Movie[]> {
+    return this.http
+      .get<Movie[]>(this.dataURL)
+      .pipe(map((movies) => ids.map((id) => movies.find((movie: Movie) => movie.id === id)!)));
+  }
+
   getGenres(): Observable<string[]> {
     return this.http
       .get<Movie[]>(this.dataURL)

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Movie, MovieState } from '../../shared';
+import { Movie, MovieState, UpdateLastVisitedMovieIds } from '../../shared';
 import { Store } from '@ngxs/store';
 import { MovieListComponent } from '../../components/movie-list/movie-list.component';
 
@@ -13,7 +13,11 @@ import { MovieListComponent } from '../../components/movie-list/movie-list.compo
   styleUrl: './recent.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecentComponent {
+export class RecentComponent implements OnInit {
   store = inject(Store);
   movies: Signal<Movie[]> = this.store.selectSignal(MovieState.getLastVisitedMovies);
+
+	ngOnInit(): void {
+		this.store.dispatch(new UpdateLastVisitedMovieIds());
+	}
 }

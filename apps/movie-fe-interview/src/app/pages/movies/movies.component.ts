@@ -10,6 +10,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -22,7 +23,7 @@ import { ToastService } from '../../shared/services/toast.service';
 export class MoviesComponent implements OnInit {
   private store = inject(Store);
   private destroyRef = inject(DestroyRef);
-	private toastService = inject(ToastService);
+  private toastService = inject(ToastService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -52,12 +53,14 @@ export class MoviesComponent implements OnInit {
     if (!this.searchTerm() && !this.selectedGenres().length) {
       this.store
         .dispatch(new LoadMovies())
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          error: () => {
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
+          catchError((err) => {
             this.toastService.showError('Error loading movies. Please try again!');
-          },
-        });
+            return err;
+          })
+        )
+        .subscribe();
     }
   }
 

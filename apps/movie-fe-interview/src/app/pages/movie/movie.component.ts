@@ -12,10 +12,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { MovieState } from '../../shared/state/movie.state';
-import { AddLastVisitedMovie, LoadMovie, Movie, ClearMovie, onImageError } from '../../shared';
+import { AddLastVisitedMovieId, LoadMovie, Movie, ClearMovie, onImageError } from '../../shared';
 import { ToastService } from '../../shared/services/toast.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
+import { catchError, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-movie',
@@ -38,7 +39,7 @@ export class MovieComponent implements OnInit, OnDestroy {
       const currentMovie = this.movie();
 
       if (currentMovie !== null) {
-        this.store.dispatch(new AddLastVisitedMovie(currentMovie));
+        this.store.dispatch(new AddLastVisitedMovieId(currentMovie.id));
       }
     });
   }
@@ -52,17 +53,16 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   loadMovie(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
-    if (slug) {
-      this.store
-        .dispatch(new LoadMovie(slug))
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          error: () => {
-            this.toastService.showError('Error loading movies. Please try again!');
-          },
-        });
-    }
+    this.route.params
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((param) => this.store.dispatch(new LoadMovie(param['slug']))),
+        catchError((err) => {
+					this.toastService.showError('Error loading movies. Please try again!');
+					return err;
+				}),
+      )
+      .subscribe();
   }
 
   roundPopularity(popularity: string | undefined): number {

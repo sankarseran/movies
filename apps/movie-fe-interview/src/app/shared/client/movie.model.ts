@@ -31,6 +31,7 @@ export interface MovieStateModel {
   movie: Movie | null;
   popularMovies: Movie[];
   lastVisitedMovies: Movie[];
+  lastVisitedMovieIds: string[];
   queryParam: QueryParam;
   genresOptions: string[];
 }

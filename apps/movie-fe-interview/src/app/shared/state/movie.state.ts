@@ -4,12 +4,14 @@ import { of, switchMap, tap } from 'rxjs';
 import { Movie, MovieData, MovieStateModel, QueryParam } from '../client/movie.model';
 import { MovieMockClient } from '../client/movie-mock.client';
 import {
-  AddLastVisitedMovie,
+  AddLastVisitedMovieId,
   ClearMovie,
   LoadGenres,
+  LoadLastVisitedMovies,
   LoadMovie,
   LoadMovies,
   LoadPopularMovies,
+  UpdateLastVisitedMovieIds,
   UpdateQueryParam,
 } from './movie.actions';
 import { ToastService } from '../services/toast.service';
@@ -19,8 +21,9 @@ import { ToastService } from '../services/toast.service';
   defaults: {
     movieData: { movies: [], totalLength: 0 },
     movie: null,
-    lastVisitedMovies: localStorage.getItem('lastVisitedMovies')
-      ? JSON.parse(localStorage.getItem('lastVisitedMovies') as string)
+    lastVisitedMovies: [],
+    lastVisitedMovieIds: localStorage.getItem('lastVisitedMovieIds')
+      ? JSON.parse(localStorage.getItem('lastVisitedMovieIds') as string)
       : [],
     popularMovies: [],
     queryParam: {
@@ -34,8 +37,8 @@ import { ToastService } from '../services/toast.service';
 })
 @Injectable()
 export class MovieState {
-	movieMockClient = inject(MovieMockClient);
-	toastService = inject(ToastService);
+  movieMockClient = inject(MovieMockClient);
+  toastService = inject(ToastService);
 
   @Selector()
   static getPopularMovies(state: MovieStateModel): Movie[] {
@@ -97,6 +100,13 @@ export class MovieState {
     return this.movieMockClient.getPopularMovies().pipe(tap((popularMovies) => ctx.patchState({ popularMovies })));
   }
 
+  @Action(LoadLastVisitedMovies)
+  LoadLastVisitedMovies(ctx: StateContext<MovieStateModel>) {
+    return this.movieMockClient
+      .getLastVisitedMovies(ctx.getState().lastVisitedMovieIds)
+      .pipe(tap((lastVisitedMovies) => ctx.patchState({ lastVisitedMovies })));
+  }
+
   @Action(UpdateQueryParam)
   updateQueryParam(ctx: StateContext<MovieStateModel>, action: UpdateQueryParam) {
     ctx.patchState({ queryParam: { ...ctx.getState().queryParam, ...action.queryParam } });
@@ -134,18 +144,43 @@ export class MovieState {
     return this.movieMockClient.getGenres().pipe(tap((genresOptions) => ctx.patchState({ genresOptions })));
   }
 
-  @Action(AddLastVisitedMovie)
-  addLastVisitedMovie(ctx: StateContext<MovieStateModel>, action: AddLastVisitedMovie) {
+  @Action(AddLastVisitedMovieId)
+  addLastVisitedMovie(ctx: StateContext<MovieStateModel>, action: AddLastVisitedMovieId) {
     try {
       if (!action.movie) return;
 
       const state = ctx.getState();
-      const lastVisitedMovies = [action.movie, ...state.lastVisitedMovies]
-        .filter((movie, index, self) => self.findIndex((m) => m.id === movie.id) === index)
+      const lastVisitedMovieIds = [action.movie, ...state.lastVisitedMovieIds]
+        .filter((idx, index, self) => self.findIndex((id) => id === idx) === index)
         .slice(0, 5);
 
-      localStorage.setItem('lastVisitedMovies', JSON.stringify(lastVisitedMovies));
-      ctx.patchState({ lastVisitedMovies });
+      localStorage.setItem('lastVisitedMovieIds', JSON.stringify(lastVisitedMovieIds));
+      ctx.patchState({ lastVisitedMovieIds });
+
+			ctx.dispatch(new LoadLastVisitedMovies()).subscribe({
+				error: (err) => {
+					console.error('Error updating query params:', err);
+					this.toastService.showError('Error loading last visited movies.');
+				},
+			});
+    } catch (error) {
+      console.error('Error saving last visited movies:', error);
+      this.toastService.showError('Error saving last visited movie.');
+    }
+  }
+
+  @Action(UpdateLastVisitedMovieIds)
+  updateLastVisitedMovieIds(ctx: StateContext<MovieStateModel>) {
+    try {
+      const lastVisitedMovieIds = JSON.parse(localStorage.getItem('lastVisitedMovieIds') as string);
+      ctx.patchState({ lastVisitedMovieIds: lastVisitedMovieIds || [] });
+
+			ctx.dispatch(new LoadLastVisitedMovies()).subscribe({
+				error: (err) => {
+					console.error('Error updating query params:', err);
+					this.toastService.showError('Error loading last visited movies.');
+				},
+			});
     } catch (error) {
       console.error('Error saving last visited movies:', error);
       this.toastService.showError('Error saving last visited movie.');

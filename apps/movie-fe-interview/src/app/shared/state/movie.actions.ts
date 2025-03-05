@@ -1,4 +1,4 @@
-import { Movie, QueryParam } from '../client/movie.model';
+import { QueryParam } from '../client/movie.model';
 
 const ACTION_SCOPE = '[Movies]';
 
@@ -23,9 +23,17 @@ export class LoadPopularMovies {
   static readonly type = `${ACTION_SCOPE} Load Popular Movies`;
 }
 
-export class AddLastVisitedMovie {
+export class LoadLastVisitedMovies {
+  static readonly type = `${ACTION_SCOPE} Load Last Visited Movies`;
+}
+
+export class UpdateLastVisitedMovieIds {
+  static readonly type = `${ACTION_SCOPE} Update Last visited Movies`;
+}
+
+export class AddLastVisitedMovieId {
   static readonly type = `${ACTION_SCOPE} Add Last Visited Movie`;
-  constructor(public movie: Movie) {}
+  constructor(public movie: string) {}
 }
 
 export class UpdateQueryParam {
